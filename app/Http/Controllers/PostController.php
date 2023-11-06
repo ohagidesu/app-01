@@ -14,22 +14,12 @@ class PostController extends Controller
     
     public function index(Post $post)
     {
-        return view('posts.index')->with(['posts' => $post->get()]);  
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);  
        //blade内で使う変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入。
     }
     
-    public function __construct()
-     {
-      $this->middleware('auth')->except(['list', 'show']);
-     }
+    
 
-     public function list()
-     {
-        $posts = Post::orderByDesc('created_at')
-          ->with('user')
-          ->paginate(5);
-     return view('posts.list', ['posts' => $posts]);
-     }
 
      public function create()
      {
@@ -38,6 +28,7 @@ class PostController extends Controller
 
      public function store(PostRequest $request, Post $post)
      {
+        $post->user_id = \Auth::id();
         $input = $request['post'];
         $post->fill($input)->save();
         return redirect('/posts/' . $post->id); 
@@ -61,11 +52,6 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
      }
 
-     public function destroy()
-     {
-          
-     }
-     
      public function delete(Post $post)
      {
         $post->delete();

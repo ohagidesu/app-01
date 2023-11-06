@@ -11,7 +11,7 @@ class Post extends Model
     
     protected $fillable = [
     'title',
-    'body',
+    'content',
 ];
     public function user() {
          return $this->belongsTo(User::class);
@@ -23,11 +23,11 @@ class Post extends Model
     return view('posts.index')->with(['posts' => $post->getByLimit()]);
     }
     
-    public function getByLimit(int $limit_count = 10)
-    {
+    public function getPaginateByLimit(int $limit_count = 10)
+{
     // updated_atで降順に並べたあと、limitで件数制限をかける
-    return $this->orderBy('updated_at', 'DESC')->limit($limit_count)->get();
-    }
+    return $this->withCount('likes')->orderBy('updated_at', 'DESC')->paginate($limit_count);
+}
     
     // 実装1
     public function likes()

@@ -15,11 +15,11 @@
             </div>
             <div class="body">
                 <h3>投稿内容</h3>
-                <textarea name="post[body]" placeholder="今日も1日お疲れさまでした。">{{ old('post.body') }}</textarea>
-                <p class="body__error" style="color:red">{{ $errors->first('post.body') }}</p>
+                <textarea name="post[content]" placeholder="今日も1日お疲れさまでした。">{{ old('post.content') }}</textarea>
+                <p class="content__error" style="color:red">{{ $errors->first('post.content') }}</p>
             </div>　
             <input type="submit" value="この内容で投稿する"/>
         </form>
-        <div class="back">[<a href="/">back</a>]</div>
+        <div class="back">[<a href="/posts">back</a>]</div>
     </body>
 </html>

@@ -14,15 +14,14 @@
         <div class="content">
             <div class="content_post">
                 <h3>本文</h3>
-                <p>{{ $post->body }}</p>
+                <p>{{ $post->content }}</p>
             </div>
          </div>
           <div class='edit'>
              <a href="/posts/{{ $post->id }}/edit">edit</a>
          </div>
          <div class='footer'>
-             <a href="/">戻る</a>
-             <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
+             <a href="/posts">戻る</a>
          </div>
     </body>
 </html>

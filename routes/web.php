@@ -5,7 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminRegisterController;
-
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +21,11 @@ use App\Http\Controllers\Admin\AdminRegisterController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/', function() {
+    return view('posts.index');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -62,5 +68,33 @@ Route::group(['prefix' => 'admin'], function () {
         // ダッシュボード
         Route::get('dashboard', fn() => view('admin.dashboard'))
             ->name('admin.dashboard');
+            
     });
+});
+
+
+Route::controller(PostController::class)->prefix('posts')->name('posts')->group(function() {});
+
+Route::post('/posts/like', [PostController::class, 'like'])->name('posts.like');
+
+
+   
+Route::get('/', [PostController::class, 'index']);
+Route::get('/posts/create', [PostController::class, 'create']);
+Route::get("/posts/{post}", [PostController::class ,"show"]);
+Route::post('/posts', [PostController::class, 'store']);
+Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+Route::put('/posts/{post}', [PostController::class, 'update']);
+Route::delete('/posts/{post}', [PostController::class,'delete']);
+
+
+
+Route::controller(PostController::class)->prefix('posts')->name('posts')->group(function() {
+     Route::get('/', 'list');
+     Route::get('/create', 'create')->name('.create');
+     Route::post('/create', 'store')->name('.store');
+     Route::get('/{post}', 'show')->name('.show');
+     Route::get('/{post}/edit', 'edit')->name('.edit');
+     Route::put('/{post}', 'update')->name('.update');
+     Route::delete('/{post}', 'destroy')->name('.destroy');
 });

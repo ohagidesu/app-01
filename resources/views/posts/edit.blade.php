@@ -16,8 +16,8 @@
             </div>
             <div class="body">
                 <h2>Body</h2>
-                <textarea name="post[body]" placeholder="今日も1日お疲れさまでした。">{{ $post->body }}</textarea>
-                <p class="body__error" style="color:red">{{ $errors->first('post.body') }}</p>
+                <textarea name="post[content]" placeholder="今日も1日お疲れさまでした。">{{ $post->content }}</textarea>
+                <p class="content__error" style="color:red">{{ $errors->first('post.content') }}</p>
             </div>
             <input type="submit" value="update"/>
         </form>

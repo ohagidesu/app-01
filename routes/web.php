@@ -79,7 +79,7 @@ Route::post('/posts/like', [PostController::class, 'like'])->name('posts.like');
 
 
    
-Route::get('/', [PostController::class, 'index']);
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::get('/posts/create', [PostController::class, 'create']);
 Route::get("/posts/{post}", [PostController::class ,"show"]);
 Route::post('/posts', [PostController::class, 'store']);
@@ -89,12 +89,3 @@ Route::delete('/posts/{post}', [PostController::class,'delete']);
 
 
 
-Route::controller(PostController::class)->prefix('posts')->name('posts')->group(function() {
-     Route::get('/', 'list');
-     Route::get('/create', 'create')->name('.create');
-     Route::post('/create', 'store')->name('.store');
-     Route::get('/{post}', 'show')->name('.show');
-     Route::get('/{post}/edit', 'edit')->name('.edit');
-     Route::put('/{post}', 'update')->name('.update');
-     Route::delete('/{post}', 'destroy')->name('.destroy');
-});

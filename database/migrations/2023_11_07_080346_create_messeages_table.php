@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('messeages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('talk_id')->constrained('talks')->onDelete('cascade');
+            $table->foreignId('talk_id')->nullable()->constrained('talks')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('admin_id')->nullable()->constrained('admins')->onDelete('cascade');
             $table->string('messages');

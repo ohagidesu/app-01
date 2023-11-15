@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\HouseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +23,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', function() {
+/*Route::get('/', function() {
     return view('posts.index');
-});
+});*/
 
 
 Route::get('/dashboard', function () {
@@ -33,7 +34,6 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/chat', [ChatController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -88,4 +88,22 @@ Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}', [PostController::class,'delete']);
 
 
+Route::middleware(['auth'])->group(function () {
+    // 理想の家の一覧表示
+    Route::get('/houses', [HouseController::class, 'index'])->name('houses.index');
 
+    // 新しい家を登録する画面表示
+    Route::get('/houses/create', [HouseController::class, 'create'])->name('houses.create');
+
+    // 新しい家のデータを保存
+    Route::post('/houses', [HouseController::class, 'store'])->name('houses.store');
+
+    // 家の編集画面表示
+    Route::get('/houses/{house}/edit', [HouseController::class, 'edit'])->name('houses.edit');
+
+    // 家のデータを更新
+    Route::put('/houses/{house}', [HouseController::class, 'update'])->name('houses.update');
+
+    // 家のデータを削除
+    Route::delete('/houses/{house}', [HouseController::class, 'destroy'])->name('houses.destroy');
+});

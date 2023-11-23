@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,7 +45,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/chat', [ChatController::class, 'index']);
+Route::get('/chat/{admin}', [ChatController::class, 'openChat']);
 Route::post('/chat', [ChatController::class, 'sendMessage']);
 
 /*
@@ -89,5 +90,5 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
 Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}', [PostController::class,'delete']);
 
-
+Route::get('/looks', [LookController::class, 'index'])->name('looks');
 

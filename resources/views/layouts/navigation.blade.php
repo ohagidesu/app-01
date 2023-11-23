@@ -14,8 +14,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                   <x-nav-link :href="route('posts')" :active="request()->routeIs('posts')">
-                     {{ __('口コミ投稿掲示板') }}
+                    <x-nav-link :href="route('posts')" :active="request()->routeIs('posts')">
+                        {{ __('口コミ投稿掲示板') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('looks')" :active="request()->routeIs('looks')">
+                        {{ __('チャットをする') }}
                     </x-nav-link>
                 </div>
             </div>

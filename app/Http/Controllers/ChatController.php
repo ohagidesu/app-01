@@ -46,6 +46,7 @@ class ChatController extends Controller
     // メッセージ送信時の処理
     public function sendMessage( Request $request,Messeage $messeage )
     {
+        //dd($request);
         // auth()->user() : 現在認証しているユーザーを取得
         $user = auth()->user();
         $strUsername = $user->name;
@@ -59,11 +60,12 @@ class ChatController extends Controller
         $message = new Message;
         $message->username = $strUsername;
         $message->body = $strMessage;
+        $message->talk_id = $request->input('talk_id');
         
         // 送信者を含めてメッセージを送信
         MessageSent::dispatch($message);
         
-        $messeage->talk_id = null;
+        $messeage->talk_id = $request->input('talk_id');;
         $messeage->user_id = $userId;
         $messeage->admin_id = null;
         $messeage->messages = $strMessage;
@@ -85,7 +87,7 @@ class ChatController extends Controller
         //broadcast( new MessageSent($message))->toOthers();
         
         //return ['message' => $strMessage];
-        return $request;
+        return response()->json(['message' => 'Message sent successfully']);
     }
 }
 

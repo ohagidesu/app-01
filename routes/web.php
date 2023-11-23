@@ -45,8 +45,9 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/chat/{admin}', [ChatController::class, 'openChat']);
 Route::post('/chat', [ChatController::class, 'sendMessage']);
+Route::get('/chat/{admin}', [ChatController::class, 'openChat']);
+
 
 /*
 |--------------------------------------------------------------------------

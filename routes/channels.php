@@ -21,3 +21,7 @@ Broadcast::channel('dating', function ($user) {
     return auth()->check();
 });
 
+// admin用のチャンネル
+Broadcast::channel('admin-dating', function ($admin) {
+    return auth('admin')->check(); // admin用の認証ロジック
+});

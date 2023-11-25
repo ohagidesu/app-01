@@ -12,4 +12,9 @@ class Messeage extends Model
          return $this->belongsTo(User::class);
      //     return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
      }
+     
+     public function admin() {
+         return $this->belongsTo(Admin::class);
+     //     return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
+     }
 }

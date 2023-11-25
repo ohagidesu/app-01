@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Library\Message;
-use App\Events\MessageSent;
+use App\Events\AdminMessageSent;
 use App\Models\Messeage;
 use App\Models\Admin;
 use App\Models\Talk;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class ChatController extends Controller
+class AdminChatController extends Controller
 {
     public function __construct()
     {
@@ -20,14 +22,15 @@ class ChatController extends Controller
     
     public function index()
     {
-       $admins = Admin::all();
-        return view('looks.index', compact('admins'));
+       $users = User::all();
+        return view('admin.index', compact('users'));
     }
 
-    public function openChat(Admin $admin)
+    public function openChat(User $user,Request $request)
     {
-        $userId = auth()->user()->id;
-        $adminId = $admin->id; // ここで相手のユーザーIDを指定
+        //dd($admin = Auth::guard('admin'));
+        $adminId = Auth::guard('admin')->id();
+        $userId = $user->id; // ここで相手のユーザーIDを指定
         
          // データベース内でチャットが存在するかを確認
         $talk = Talk::where(function($query) use ($userId, $adminId) {
@@ -45,7 +48,7 @@ class ChatController extends Controller
 
         $messages = Messeage::where('talk_id', $talk->id)->orderBy('updated_at', 'DESC')->get();;
 
-        return view('chat')->with(['talk'=>$talk,'messages'=>$messages]);
+        return view('admin/chat')->with(['talk'=>$talk,'messages'=>$messages]);
         
     }
     
@@ -54,9 +57,9 @@ class ChatController extends Controller
     {
         //dd($request);
         // auth()->user() : 現在認証しているユーザーを取得
-        $user = auth()->user();
-        $strUsername = $user->name;
-        $userId = auth()->user()->id;
+        $admin = Auth::guard('admin');
+        $strUsername = $admin->user()->name;
+        $adminId = Auth::guard('admin')->id();
         
         // リクエストからデータの取り出し
         $strMessage = $request->input('message');
@@ -69,11 +72,11 @@ class ChatController extends Controller
         $message->talk_id = $request->input('talk_id');
         
         // 送信者を含めてメッセージを送信
-        MessageSent::dispatch($message);
+        AdminMessageSent::dispatch($message);
         
         $messeage->talk_id = $request->input('talk_id');;
-        $messeage->user_id = $userId;
-        $messeage->admin_id = null;
+        $messeage->user_id = null;
+        $messeage->admin_id = $adminId;
         $messeage->messages = $strMessage;
         $messeage->save();
         

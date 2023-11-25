@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<x-app-layout>
 <head>
     <title>Employee List</title>
 </head>
@@ -13,4 +12,4 @@
         @endforeach
     </ul>
 </body>
-</html>
+</x-app-layout>

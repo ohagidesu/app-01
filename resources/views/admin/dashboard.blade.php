@@ -14,7 +14,7 @@
                     {{ __("You're logged in!") }}
 
                     <div>{{ Auth::user()->name }}</div>
-
+                    <a href="/admin/looks" >ユーザー一覧</a>
                 </div>
             </div>
         </div>

@@ -4,10 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\AdminChatController;
 use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LookController;
+use Illuminate\Support\Facades\Broadcast;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +21,7 @@ use App\Http\Controllers\LookController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Broadcast::routes(['middleware' => ['auth:admin']]);
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,6 +77,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('dashboard', fn() => view('admin.dashboard'))
             ->name('admin.dashboard');
             
+    Route::get('/chat/{user}', [AdminChatController::class, 'openChat']);
+    Route::get('/looks', [AdminChatController::class, 'index'])->name('admin.looks');   
+    Route::post('/chat', [AdminChatController::class, 'sendMessage']);
     });
 });
 
@@ -91,5 +98,5 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
 Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}', [PostController::class,'delete']);
 
-Route::get('/looks', [LookController::class, 'index'])->name('looks');
+Route::get('/looks', [ChatController::class, 'index'])->name('looks');
 

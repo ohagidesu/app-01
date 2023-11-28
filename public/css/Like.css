@@ -1,0 +1,7 @@
+.liked {
+    color: rgb(225, 58, 86);
+}
+
+.like-toggle {
+    cursor: pointer;
+}

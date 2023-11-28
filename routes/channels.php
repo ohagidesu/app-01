@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('dating', function ($user) {
+    return auth()->check();
+});
+
+// admin用のチャンネル
+Broadcast::channel('admin-dating', function ($admin) {
+    return auth('admin')->check(); // admin用の認証ロジック
+});

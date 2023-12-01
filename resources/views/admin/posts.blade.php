@@ -79,7 +79,11 @@
     </div>
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
@@ -109,21 +113,24 @@
             
             <!-- Page Content -->
             <main>
-
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h1 class="text-white">Adminのダッシュボード</h1>
-                    {{ __("You're logged in!") }}
-
-                    <div>{{ Auth::user()->name }}</div>
-                    <a href="/admin/looks" >ユーザー一覧</a>
+                <body class="antialiased"> 
+        <h1>Blog Name</h1>
+        <div class='posts'>
+            @foreach($posts as $post)
+                <div class='post'>
+                    <h2 class='title'>
+                        <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+                        </h2>
+                    <p class='body'>{{ $post->content }}</p>
                 </div>
-            </div>
+                 <span class="likes">
+                            <i class="fas fa-heart heart like-toggle liked" data-post-id="{{ $post->id }}"></i>
+                        <span class="like-counter">{{$post->likes_count}}</span>
+                        </span><!-- /.likes -->
+            @endforeach
         </div>
-    </div>
+        <div class='paginate'>{{ $posts->links()}}</div>
+    </body>
             </main>
         </div>
     </body>

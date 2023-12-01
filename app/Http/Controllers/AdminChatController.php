@@ -8,6 +8,7 @@ use App\Library\Message;
 use App\Events\AdminMessageSent;
 use App\Models\Messeage;
 use App\Models\Admin;
+use App\Models\Post;
 use App\Models\Talk;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,12 @@ class AdminChatController extends Controller
        $users = User::all();
         return view('admin.index', compact('users'));
     }
+    
+    public function posts(Post $post)
+     {
+        return view('admin.posts')->with(['posts' => $post->getPaginateByLimit()]);  
+       //blade内で使う変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入。
+     }
 
     public function openChat(User $user,Request $request)
     {

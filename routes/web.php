@@ -77,6 +77,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('dashboard', fn() => view('admin.dashboard'))
             ->name('admin.dashboard');
             
+    Route::get('/posts', [AdminChatController::class, 'posts'])->name('admin.posts');       
     Route::get('/chat/{user}', [AdminChatController::class, 'openChat']);
     Route::get('/looks', [AdminChatController::class, 'index'])->name('admin.looks');   
     Route::post('/chat', [AdminChatController::class, 'sendMessage']);
